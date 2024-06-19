@@ -185,3 +185,9 @@ class TestAccountService(TestCase):
             f"{BASE_URL}/{account.id}"
         )
         self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_method_not_allowed(self):
+        """It not allow an illegal method call"""
+        account = self._create_accounts(1)[0]
+        resp = self.client.delete(BASE_URL)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
