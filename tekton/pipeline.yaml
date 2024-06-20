@@ -67,7 +67,7 @@ spec:
           value: "-v --with-spec --spec-color"
       runAfter:
         - clone
-
+        
     - name: build
       workspaces:
         - name: source
@@ -76,10 +76,8 @@ spec:
         name: buildah
         kind: ClusterTask
       params:
-        - name: image
-          value: "python:3.9-slim"
-        - name: args
-          value: "$(params.build-image)"
+      - name: IMAGE
+        value: "$(params.build-image)"
       runAfter:
         - tests
         - lint
