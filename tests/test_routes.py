@@ -145,7 +145,7 @@ class TestAccountService(TestCase):
             f'{BASE_URL}/{fake_id}', content_type='application/json'
         )
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
-        
+
     def test_get_account_list(self):
         """It should Get a list of Accounts"""
         self._create_accounts(5)
@@ -165,8 +165,8 @@ class TestAccountService(TestCase):
         new_account = resp.get_json()
         new_account["name"] = "Something Known"
         resp = self.client.put(
-            f"{BASE_URL}/{new_account['id']}", 
-            json = new_account
+            f"{BASE_URL}/{new_account['id']}",
+            json=new_account
         )
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         updated_account = resp.get_json()
@@ -175,7 +175,6 @@ class TestAccountService(TestCase):
     def test_update_an_account_not_found(self):
         """It should Not Update an Account that is not found"""
         fake_id = 0
-        test_account = AccountFactory()
         resp = self.client.put(
             f"{BASE_URL}/{fake_id}"
         )
@@ -191,7 +190,6 @@ class TestAccountService(TestCase):
 
     def test_method_not_allowed(self):
         """It not allow an illegal method call"""
-        account = self._create_accounts(1)[0]
         resp = self.client.delete(BASE_URL)
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -207,7 +205,7 @@ class TestAccountService(TestCase):
         }
         for key, val in headers.items():
             self.assertEqual(resp.headers.get(key), val)
-    
+
     def test_cors_policies(self):
         """It should return a CORS header"""
         resp = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
